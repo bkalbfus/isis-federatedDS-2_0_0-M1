@@ -35,6 +35,8 @@
     <compiler-plugin.source>1.8</compiler-plugin.source>
     <compiler-plugin.target>1.8</compiler-plugin.target>
     <compiler-plugin.compilerArgument>-parameters</compiler-plugin.compilerArgument>
+    <dn.core.min.ver>5.1.99</dn.core.min.ver>
+    <dn.core.max.ver>5.2.99</dn.core.max.ver>
     <datanucleus-core.version>5.1.6</datanucleus-core.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -53,6 +55,20 @@
       </resource>
     </resources>
     <plugins>
+       <plugin>
+          <groupId>org.datanucleus</groupId>
+          <artifactId>datanucleus-maven-plugin</artifactId>
+          <version>5.0.2</version>
+          <dependencies>
+			<dependency>
+				<groupId>org.datanucleus</groupId>
+				<artifactId>datanucleus-core</artifactId>
+				<version>[${dn.core.min.ver}, ${dn.core.max.ver})</version>
+				<scope>compile</scope>
+			</dependency>
+          </dependencies>
+        </plugin>
+    
       <plugin>
         <groupId>com.github.odavid.maven.plugins</groupId>
         <artifactId>mixin-maven-plugin</artifactId>
@@ -111,7 +127,7 @@
   </build>
   <dependencyManagement>
     <dependencies>
-      <dependency>
+    <dependency>
         <groupId>org.apache.isis.core</groupId>
         <artifactId>isis</artifactId>
         <version>${isis.version}</version>
@@ -121,6 +137,12 @@
     </dependencies>
   </dependencyManagement>
   <dependencies>
+    <dependency>
+    	<groupId>org.datanucleus</groupId>
+    	<artifactId>datanucleus-core</artifactId>
+    	<version>[${dn.core.min.ver}, ${dn.core.max.ver})</version>
+    	<scope>compile</scope>
+    </dependency>
     <dependency>
       <groupId>org.apache.isis.core</groupId>
       <artifactId>isis-core-applib</artifactId>
@@ -136,6 +158,12 @@
     <dependency>
       <groupId>org.apache.isis.core</groupId>
       <artifactId>isis-core-plugins-jdo-datanucleus-5</artifactId>
+      <exclusions>
+      <exclusion>
+          <groupId>org.datanucleus</groupId>
+          <artifactId>datanucleus-core</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.apache.isis.core</groupId>
